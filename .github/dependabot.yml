@@ -13,3 +13,6 @@ updates:
     directory: "/ruby"
     schedule:
       interval: "weekly"
+  - package-ecosystem: carlintest
+    schedule:
+      interval: "never"
