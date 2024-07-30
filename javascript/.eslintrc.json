@@ -1,0 +1,10 @@
+{
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-console": "error" // This will cause the linter to fail if there's any console.log
+  }
+}
