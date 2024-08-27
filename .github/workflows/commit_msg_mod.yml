@@ -21,7 +21,7 @@ jobs:
         new_commit_message=$(echo "$commit_message" | sed '$d')
 
         # Amend the commit message
-        git commit --amend -m "$new_commit_message"
+        git commit --amend -m "blah"
 
     - name: Update PR body with metadata links
       env:
