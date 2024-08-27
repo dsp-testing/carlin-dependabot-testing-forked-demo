@@ -1,0 +1,32 @@
+name: Customize Dependabot Commit Messages
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+
+jobs:
+  customize-commit-message:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Extract and remove metadata links from commit message
+      run: |
+        # Assuming the metadata links are on the last line of the commit message
+        commit_message=$(git log -1 --pretty=%B)
+        metadata_links=$(echo "$commit_message" | grep -Eo 'https?://[^\ ]+')
+        new_commit_message=$(echo "$commit_message" | sed '$d')
+
+        # Amend the commit message
+        git commit --amend -m "$new_commit_message"
+
+    - name: Update PR body with metadata links
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        pr_number=$(jq --raw-output .number "$GITHUB_EVENT_PATH")
+        pr_body=$(gh pr view "$pr_number" --json body --jq .body)
+        gh pr edit "$pr_number" --body "$pr_body"$'\n\n'"$metadata_links"
