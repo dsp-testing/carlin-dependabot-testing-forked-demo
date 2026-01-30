@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "hot-formula-parser": "^3.0.1",
-    "lodash": "3.10.1" // Intentionally use an old version
+    "lodash": "^4.17.21"
   },
     "devDependencies": {
     "eslint": "^7.32.0",
